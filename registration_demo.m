@@ -25,6 +25,7 @@ scale=[1 1 0.01 0.01 0.01 0.01 0.01];
 %[cost,ims,m]=AffineRegistration(im_s,im_t,param);
 %[x]=lsqnonlin(@(x)AffineRegistration(Itarget_s,Isource_s,x,scale),param,[],[],optimset('Display','iter','MaxIter',1000));
 x=gradient_descent(param,Itarget_s,Isource_s,scale,100);
+%[x]=kanade_alignment(param,Itarget,Isource,scale,100);
 
 x=x.*scale;
 M=TransformationMatrix(x);

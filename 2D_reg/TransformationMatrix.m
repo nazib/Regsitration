@@ -24,8 +24,8 @@ T=[1    0   Tx;
    0    0   1];
 
 %Rotation Matrix
-R=[cos(r)   sin(r)  0;
-  -sin(r)   cos(r)  0;
+R=[cos(r)   -sin(r)  0;
+  sin(r)   cos(r)  0;
      0         0    1];
 
 % Scale
@@ -39,6 +39,13 @@ H=[1    hx     0;
    0     0     1];
 
 
-matrix=(R*S+T)*H;
+matrix=zeros(3,3);
+matrix(1,1)=sx*cos(r);
+matrix(1,2)=sin(r);
+matrix(1,3)=Tx;
+matrix(2,1)=-sin(r);
+matrix(2,2)=sy*cos(r);
+matrix(2,3)=Ty;
+matrix(3,3)=1;
 end
 

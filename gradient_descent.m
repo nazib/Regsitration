@@ -1,6 +1,6 @@
 function [param]=gradient_descent(init_param,target,source,scale,iter)
 
-%{
+
 cost=AffineRegistration(target,source,init_param,scale);
 step=1;
 gradients=[];
@@ -51,7 +51,7 @@ for i=1:iter
     cost=AffineRegistration(target,source,init_param,scale);
     all_cost=[all_cost;cost];
     
-    if isnan(cost)
+    if isnan(cost) 
          break;
     end
     
@@ -60,18 +60,17 @@ param=init_param;
 plot(all_cost);
 end
 
-%}
 
-[dx,dy]=gradient(source);
-detaI=sqrt(dx.^2+dy.^2);
-theta=deg2rad(init_param(3));
+% [dx,dy]=gradient(source);
+% detaI=sqrt(dx.^2+dy.^2);
+% theta=deg2rad(init_param(3));
+% 
+% jecobian=[1 0 -sin(theta)-cos(theta);
+%           0 1  cos(theta)-sin(theta);
+%           0 0           1];
+% differ=abs(source-target);
 
-jecobian=[1 0 -sin(theta)-cos(theta);
-          0 1  cos(theta)-sin(theta);
-          0 0           1];
-differ=abs(source-target);
 
-end
 
 
 
