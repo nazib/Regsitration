@@ -19,19 +19,19 @@ Isource_s=imfilter(Isource,fspecial('gaussian',[10 10],2.5));
 Itarget_s=imfilter(Itarget,fspecial('gaussian',[10 10],2.5));
 
 %% Apply Affine registration
-param=[0,0,0,100,100,0,0];
-scale=[1 1 0.01 0.01 0.01 0.01 0.01];
+param=[0 0 0 100 100 0 0];
+scale=[1 1 1 0.01 0.01 0 0];
 
 %[cost,ims,m]=AffineRegistration(im_s,im_t,param);
 %[x]=lsqnonlin(@(x)AffineRegistration(Itarget_s,Isource_s,x,scale),param,[],[],optimset('Display','iter','MaxIter',1000));
-x=gradient_descent(param,Itarget_s,Isource_s,scale,100);
+x=gradient_descent(param,Itarget_s,Isource_s,scale,1000);
 %[x]=kanade_alignment(param,Itarget,Isource,scale,100);
 
 x=x.*scale;
 M=TransformationMatrix(x);
-[reg_I]=ApplyAffine(Isource,M);
+[reg_I]=ApplyAffine(Itarget,M);
         
-figure(2);
+figure(3);
 subplot(1,3,1);imagesc(Itarget);
 title('Target Image');
 subplot(1,3,2);imagesc(Isource);

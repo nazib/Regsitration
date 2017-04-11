@@ -7,7 +7,7 @@ params=params.*scale;
 
 M=TransformationMatrix(params);
 IsourceT=ApplyAffine(Isource,M);
-imshow(uint8(IsourceT.*255));
+%imshow(uint8(IsourceT.*255));
 %[cost,IsourceT]=image_difference(Itarget,IsourceT,'cc');
 %cost=correlation(Itarget,IsourceT);
 cost=1-corr2(Itarget,IsourceT);

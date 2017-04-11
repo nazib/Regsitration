@@ -20,9 +20,9 @@ jecobian=[1 0 -sin(r)-cos(r);
 
 
 steep_I=delta_I*jecobian;
-hassian=steep_I'*steep_I;
+hassian=sum(steep_I'*steep_I);
 
-delta_param=inv(hassian)*steep_I'*[differ_I(:)];
+delta_param=sum(steep_I'*[differ_I(:)])./hassian;
 init_param(1:3)=init_param(1:3)+delta_param;
 i
 end
