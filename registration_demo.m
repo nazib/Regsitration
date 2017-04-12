@@ -24,12 +24,14 @@ scale=[1 1 1 0.01 0.01 0 0];
 
 %[cost,ims,m]=AffineRegistration(im_s,im_t,param);
 %[x]=lsqnonlin(@(x)AffineRegistration(Itarget_s,Isource_s,x,scale),param,[],[],optimset('Display','iter','MaxIter',1000));
-x=gradient_descent(param,Itarget_s,Isource_s,scale,1000);
+[x,all]=gradient_descent(param,Itarget_s,Isource_s,scale,1000);
 %[x]=kanade_alignment(param,Itarget,Isource,scale,100);
-
+m=min(all(:,1));
+idx=find(all(:,1)==m);
+x=all(idx,2:end);
 x=x.*scale;
 M=TransformationMatrix(x);
-[reg_I]=ApplyAffine(Itarget,M);
+[reg_I]=ApplyAffine(Isource,M);
         
 figure(3);
 subplot(1,3,1);imagesc(Itarget);

@@ -1,4 +1,4 @@
-function [param]=gradient_descent(init_param,target,source,scale,iter)
+function [param,all_param]=gradient_descent(init_param,target,source,scale,iter)
 
 %{
 cost=AffineRegistration(target,source,init_param,scale);
@@ -60,8 +60,8 @@ param=init_param;
 plot(all_cost);
 end
 %}
-
-gamma=0.1;
+all_param=[];
+gamma=1;
 all_cost=[];
 
 for i=1:iter
@@ -89,7 +89,7 @@ delta_target_w=[dxt(:) dys(:)];
 
 %jecobian
 delta_w=[1 0 -sin(r)-cos(r);
-         0 1    cos(r)-sin(r);];
+         0 1  cos(r)-sin(r);];
 
 %gradient of cross-correlation
 delta_j=-(source_n*delta_target_w*delta_w...
@@ -97,15 +97,17 @@ delta_j=-(source_n*delta_target_w*delta_w...
 
 init_param(1:3)=init_param(1:3)-delta_j*gamma;
 
+
 [c,I,~]=AffineRegistration(target,source,init_param,scale);
 all_cost=[all_cost;c];
+all_param=[all_param;[c init_param]];
 disp(fprintf('Iteration= %d cost=%f Tx=%f Ty=%f R=%f',i,c,init_param(1),init_param(2),init_param(3)));
 % figure(1);
 % imshow(uint8(I.*255));
 
-if c<=0.51
-    break;
-end
+% if c<=0.5044
+%     break;
+%end
 end
 plot(all_cost);
 param=init_param;
