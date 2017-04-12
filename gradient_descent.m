@@ -61,11 +61,11 @@ plot(all_cost);
 end
 %}
 all_param=[];
-gamma=1;
+gamma=0.1;
 all_cost=[];
 
 for i=1:iter
-r=deg2rad(init_param(3));
+r=rad2deg(init_param(3));
 %warping
 M=TransformationMatrix(init_param);
 source_w=ApplyAffine(source,M);
@@ -88,14 +88,17 @@ delta_source_w=[dxs(:) dys(:)];
 delta_target_w=[dxt(:) dys(:)];
 
 %jecobian
-delta_w=[1 0 -sin(r)-cos(r);
-         0 1  cos(r)-sin(r);];
+sx=init_param(4);
+sy=init_param(5);
+
+delta_w=[1 0 -sx*sin(r)+cos(r) cos(r) 0;
+         0 1  -cos(r)-sy*sin(r)   0  cos(r);];
 
 %gradient of cross-correlation
 delta_j=-(source_n*delta_target_w*delta_w...
     +target_n*delta_source_w*delta_w);
 
-init_param(1:3)=init_param(1:3)-delta_j*gamma;
+init_param(1:5)=init_param(1:5)-delta_j*gamma;
 
 
 [c,I,~]=AffineRegistration(target,source,init_param,scale);

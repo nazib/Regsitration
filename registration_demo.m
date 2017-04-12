@@ -5,8 +5,8 @@ addpath('/media/nazib/Store/Image_registration/TestData');
 addpath('/media/nazib/Store/Image_registration/MyModel/2D_reg'); %for 2D registration
 
 Itarget=imread('lenag2.png');
-%im_s=rgb2gray(imresize(imread('source.jpg'),size(im_t)));
-Isource=imread('lenag3.png');
+%Isource=rgb2gray(imresize(imread('source.jpg'),size(Itarget)));
+Isource=imread('lena5.png');
 Itarget=double(Itarget);
 Isource=double(Isource);
 
@@ -24,7 +24,7 @@ scale=[1 1 1 0.01 0.01 0 0];
 
 %[cost,ims,m]=AffineRegistration(im_s,im_t,param);
 %[x]=lsqnonlin(@(x)AffineRegistration(Itarget_s,Isource_s,x,scale),param,[],[],optimset('Display','iter','MaxIter',1000));
-[x,all]=gradient_descent(param,Itarget_s,Isource_s,scale,1000);
+[x,all]=gradient_descent(param,Itarget_s,Isource_s,scale,500);
 %[x]=kanade_alignment(param,Itarget,Isource,scale,100);
 m=min(all(:,1));
 idx=find(all(:,1)==m);

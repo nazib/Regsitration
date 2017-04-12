@@ -8,7 +8,7 @@ Tx=params(1);
 Ty=params(2);
 
 %Theta/Rotation
-r=deg2rad(params(3));
+r=rad2deg(params(3));
 %r=params(3);
 %scale
 sx=params(4);
@@ -24,8 +24,8 @@ T=[1    0   Tx;
    0    0   1];
 
 %Rotation Matrix
-R=[cos(r)   -sin(r)  0;
-  sin(r)   cos(r)  0;
+R=[cos(r)   sin(r)  0;
+  -sin(r)   cos(r)  0;
      0         0    1];
 
 % Scale
