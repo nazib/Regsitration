@@ -61,10 +61,11 @@ plot(all_cost);
 end
 %}
 all_param=[];
-gamma=0.1;
+gamma=0.001;
 all_cost=[];
 
 for i=1:iter
+
 r=rad2deg(init_param(3));
 %warping
 M=TransformationMatrix(init_param);
@@ -95,9 +96,12 @@ delta_w=[1 0 -sx*sin(r)+cos(r) cos(r) 0;
          0 1  -cos(r)-sy*sin(r)   0  cos(r);];
 
 %gradient of cross-correlation
-delta_j=-(source_n*delta_target_w*delta_w...
+delta_j=-sum(source_n*delta_target_w*delta_w...
     +target_n*delta_source_w*delta_w);
 
+
+
+%parameter update
 init_param(1:5)=init_param(1:5)-delta_j*gamma;
 
 
@@ -105,12 +109,15 @@ init_param(1:5)=init_param(1:5)-delta_j*gamma;
 all_cost=[all_cost;c];
 all_param=[all_param;[c init_param]];
 disp(fprintf('Iteration= %d cost=%f Tx=%f Ty=%f R=%f',i,c,init_param(1),init_param(2),init_param(3)));
+
+
 % figure(1);
 % imshow(uint8(I.*255));
 
 % if c<=0.5044
 %     break;
 %end
+
 end
 plot(all_cost);
 param=init_param;

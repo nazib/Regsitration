@@ -6,7 +6,7 @@ addpath('/media/nazib/Store/Image_registration/MyModel/2D_reg'); %for 2D registr
 
 Itarget=imread('lenag2.png');
 %Isource=rgb2gray(imresize(imread('source.jpg'),size(Itarget)));
-Isource=imread('lena5.png');
+Isource=imread('lenag3.png');
 Itarget=double(Itarget);
 Isource=double(Isource);
 
