@@ -1,0 +1,37 @@
+clc;
+clear all;
+x=-15:14;
+y=sin(x);
+u=8;% distance between knots
+
+%finding knonts position
+k=x/u-floor(x/u);
+idx=find(k==0);
+knots=x(idx);
+
+% B-spline basis functions
+t=zeros(4,length(x));
+t(1,:)=(x-u)./u;
+t(2,:)=x./u;
+t(3,:)=(x+u)./u;
+t(4,:)=(x+2*u)./u;
+
+B=zeros(4,length(x));
+B(4,:)=(1-t(1,:).^3)./6;
+B(2,:)=(3*t(2,:).^3-6*t(2,:).^2+4)./6;
+B(3,:)=(-3*t(3,:).^3+3*t(3,:).^2+3*t(3,:)+1)./6;
+B(1,:)=t(4,:).^3./6;
+
+spline=zeros(1,length(B));
+i=floor(x./u)-1;
+
+for l=1:size(B,1)
+    spline=spline+B(l,:)*knots(abs(i(l)+l)+1);
+end
+figure;
+plot(spline); hold on;
+
+%figure;
+%plot([B(1,:) B(2,:) B(3,:) B(4,:)])
+%sp=B(1,:).*(-8)+B(2,:).*0+B(3,:)+B(4,:).*8;
+%plot(sp)
